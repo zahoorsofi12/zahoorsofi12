@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+   
+    async function deleteData()
+    {   
+        let id=new URLSearchParams(location.search).get("id");
+        let response= await fetch(`https://elearning.logichubss.com/api/Users/${id.toString()}`,{method:"DELETE"})
+        return response.status;
+    }
+    deleteData().then((returnvalue)=>
+    {
+        if(returnvalue==200)
+        {
+            alert("user deleted Successfully........");
+            location.href="GetData.html";
+        }
+    }).catch((err)=>console.log(err))
+</script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+ 
+<body>
+    <form action="">
+    <label for="userName">userName</label>
+    <input type="text" name="" id="userName" class="form-control">
+    <label for="email">email</label>
+    <input type="text" id="email" class="form-control">
+    <label for="password">password</label>
+    <input type="text" id="password" class="form-control">
+    <label for="contactNo">contactNo</label>
+    <input type="text" id="contactNo" class="form-control">
+    <label for="userRole">userRole</label>
+    <input type="text" name="" id="userRole"class="form-control">
+    <button id="btnAddUser" class="btn btn-primary">AddUser</button>
+</form>
+<script>
+    async function post(jsonData)
+    {
+        let response= await fetch(`https://elearning.logichubss.com/api/Users`,{method:"POST",
+        headers:{'Content-Type':'application/json'},
+                body:jsonData})
+        return response.json();
+    }
+    document.forms[0].addEventListener("submit",function(e)
+        {
+            e.preventDefault();
+            let user={
+                userName:document.querySelector("#userName").value,
+                email:document.querySelector("#email").value,
+                password:document.querySelector("#password").value,
+                contactNo:document.querySelector("#contactNo").value,
+                userRole:Number(document.querySelector("#userRole").value)
+            }
+            var jsonData=JSON.stringify(user);
+  
+    post(jsonData).then((user)=>
+    {
+        
+            alert("user Added Successfully..............");
+        location.href="GetData.html"
+        })
+     
+
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous"
+  />
+    <style>
+        #myform label{
+            display: list-item;
+        }
+    </style>
+</head>
+<body>
+    
+    <div>
+    <img src=""  id="myimg" alt="" style="height: 150px; width: 150px;">
+  </div>
+  <div>
+    <input type="file" id="file">
+    <button id="btnUpload" >Upload</button>
+  </div>
+    
+   
+    <form id="myForm">
+        <label for="email">Email</label><input type="text" class="form-control" name="email" id="email">
+        <label for="contactNo">ContactNo</label><input type="text" class="form-control" name="contactNo" id="contactNo">
+        <button id="btn" type="submit"class="btn btn-primary">Update</button>
+        
+    </form>
+
+    <script>
+        let id=new URLSearchParams(location.search).get("id");
+        
+        fetch(`https://elearning.logichubss.com/api/Users/${id}`,{method:"GET"})
+            
+            .then((response)=>
+            {
+                return response.json()
+            })
+            .then((user)=>
+            {
+                document.querySelector("#email").value=user.result.email;
+               document.querySelector("#contactNo").value=user.result.contactNo;
+               document.querySelector("#myimg").src=user.result.filePath
+                
+            })
+            .catch((err)=>console.log(err))
+            document.forms[0].addEventListener("submit",function(e)
+            {
+                e.preventDefault();
+                let user={
+                    id:id,
+                    email: this["email"].value,
+                    contactNo: this["contactNo"].value,
+                 
+                };
+               
+                  let obj=JSON.stringify(user);
+        fetch(`https://elearning.logichubss.com/api/Users`,{
+              method:"PUT",
+              body:obj,
+              headers:{
+                'Content-Type': 'application/json',
+                      },   
+      })
+      .then((response)=>
+      {
+        return response.json();
+      })
+      .then((user)=>
+      {
+         
+        location.href="GetData.html";
+      })
+      .catch((err)=>console.log(err))
+        
+    });
+    document.querySelector("#btnUpload").addEventListener("click", function(e){
+        e.preventDefault();
+          let file = document.querySelector("#file").files[0];
+          if((file.type+"").startsWith("image/"))
+          {
+            if(file.size<=2000000000)
+            {
+                const myForm = new FormData();
+            //   console.log(myForm)
+              myForm.append("id", id);
+              myForm.append("file", file);
+
+              fetch(`https://elearning.logichubss.com/api/users/profilepic`, {
+                method: "put",
+                body: myForm,
+              })
+                .then((response) => response.json())
+                .then((user) => {
+                  location.href = "GetData.html";
+                })
+                .catch((err) => console.error(err));
+            
+            }
+            else{
+                console.error("maximum size exceded");
+            }
+             
+          }
+          else
+          {
+            console.error("only images allowed")
+          }
+           
+             
+        });
+    </script>
+</body>
+</html>

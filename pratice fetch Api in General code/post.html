@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+ 
+ 
+<body>
+    <form action="">
+    <label for="userName">userName</label>
+    <input type="text" name="" id="userName" class="form-control">
+    <label for="email">email</label>
+    <input type="text" name="" id="email"class="form-control">
+    <label for="password">password</label>
+    <input type="text" id="password"class="form-control">
+    <label for="contactNo">contactNo</label>
+    <input type="text" id="contactNo"class="form-control">
+    <label for="userRole">userRole</label>
+    <input type="text" name="" id="userRole"class="form-control">
+    <button id="btnAdd">AddUser</button>
+</form>
+<script src="generalServices.js"></script>
+<script>
+    document.forms[0].addEventListener("submit",function(e)
+    {
+        e.preventDefault();
+        let user=
+        {
+            userName: this["userName"].value,
+            email: this["email"].value,
+            password: this["password"].value,
+            contactNo: this["contactNo"].value,
+            userRole:this["userRole"].value
+
+        }  
+   
+    post(
+        {
+            url:"users",
+            body:user,
+            success:function(data,headers,status)
+                {
+                    if(status==200)
+                    {
+                      console.log(status)
+                        location.href="getData.html"
+                    }
+                }
+            
+        }
+    )
+})
+</script>
+</body>
+</html>

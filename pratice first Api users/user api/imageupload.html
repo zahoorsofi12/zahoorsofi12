@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="file" name="file" id="file">
+    <button id="btn">upload</button>
+    <script>
+        document.querySelector("#btn").addEventListener("click",function(e){
+            let file=document.querySelector("#file").files[0];
+            if((file.type+"").startsWith("image/"))
+            {
+                if(file.size<=200000)
+                {
+                    const myform=new FormData();
+
+                    fetch(`https://elearning.logichubss.com/api/users/profilepic`,{method:"PUT",
+                body:myform})
+                .then((response) => response.json())
+                .then((user) => {
+                  location.href = "GetData.html";
+                })
+                .catch((err) => console.error(err));
+            
+            }
+            else{
+                console.error("maximum size exceded");
+            }
+             
+          }
+          else
+          {
+            console.error("only images allowed")
+          }
+        });
+    </script>
+</body>
+</html>

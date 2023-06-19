@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <style>
+        #myform label{
+            display: list-item;
+
+        }
+    </style>
+</head>
+
+<body>
+    <form id="myform" >
+        <label for="userName">userName</label>
+        <input type="text" id="userName" class="form-control">
+        <label for="email">email</label>
+        <input type="text" name="email" id="email" class="form-control">
+        <label for="password">password</label>
+        <input type="password" name="password" id="password" class="form-control">
+        <label for="contactNo">contactNo</label>
+        <input type="text" id="contactNo" class="form-control">
+        
+      
+        <button id="btnUpload" class="btn btn-info" type="submit">AddUser</button>
+    </form>
+    <script>
+            document.forms[0].addEventListener("submit",function(e)
+            {   
+                e.preventDefault()
+                
+                 
+                 let user={
+                    userName:this["userName"].value,
+                    email:this["email"].value,
+                    password:this["password"].value,
+                    contactNo:this["contactNo"].value,
+                 }
+                 let jsonData=JSON.stringify(user);
+                 fetch( 'https://elearning.logichubss.com/api/Users',{method:"POST",
+                 body:jsonData,
+                 headers:{"Content-Type":"application/json"}
+                })
+                .then((response)=>
+                {
+                    return response.json();
+                })
+                .then((user)=>
+                {
+                    alert("user Added Sucessfully........")
+                    location.href="GetData.html"
+                })
+            })
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+    <table class="table table-hover">
+        <thead>
+            <th>id</th>
+            <th>userName</th>
+            <th>email</th>
+            <th>contactNo</th>
+            <th>filePath</th>
+            <th>createdOn</th>
+        </thead>
+        <tbody id="tbody"></tbody>
+    </table>
+    <script>
+        async function get()
+        {
+            let res=await fetch('https://elearning.logichubss.com/api/Users')
+            return res.json();
+        }
+        get().then((user)=>
+        {
+                console.log(user)
+           tbody= document.querySelector("#tbody");
+           let tblres='';
+            user.result.forEach(user => {
+                tblres+=`<tr><td>${user.id}</td>
+                    <td>${user.userName}</td>
+                    <td>${user.email}</td>
+                    <td>${user.contactNo}</td>
+                    <td>${user.filePath}</td>
+                    <td>${user.createdOn}</td></tr>`
+            });
+            tbody.innerHTML=tblres;
+        })
+    </script>
+</body>
+</html>
